@@ -3,3 +3,4 @@
 .vscode
 Api_handling/decode.json
 Api_handling/encode.json
+Utility/__pycache__/
