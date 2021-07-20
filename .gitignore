@@ -1,3 +1,5 @@
 .env
 .pyc
 .vscode
+Api_handling/decode.json
+Api_handling/encode.json
