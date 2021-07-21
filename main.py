@@ -1,5 +1,7 @@
+import pandas as pd
 import asyncio
-import json  # builtin module for json handling
+import json
+from logging import raiseExceptions  # builtin module for json handling
 import os  # builtin module
 import pprint as pp  # pip install pprintpp
 from io import StringIO
@@ -14,8 +16,12 @@ prefix = ';'
 
 load_dotenv()
 bot = commands.Bot(
-    prefix, description="A fun bot that currently only compiles c++,c,py and vbnet code",
+    prefix, description="A fun bot that currently compiles over 40 different languages",
     case_insensitive=True)
+
+
+class Emotes:
+    yay = "<:yay:867316844824887328>"
 
 
 num_to_emote = {
@@ -50,50 +56,55 @@ emote_to_num = {
 }
 
 
-convert_lang = {"cpp": "C++",
-                "c": "C",
-                "py": "Python",
-                "python": "Python",
-                "vbnet": "Visual Basic.Net",
-                "bash": "Bash",
-                "basic": "Basic",
-                "clojure": "Clojure",
-                "csharp": "C#",
-                "crystal": "Crystal",
-                "d": "D",
-                "elixir": "Elixir",
-                "erlang": "Erlang",
-                "fsharp": "F#",
-                "fortran": "Fortran",
-                "go": "GO",
-                "groovy": "Groovy",
-                "haskell": "Haskell",
-                "insect": "Insect",
-                "java": "Java",
-                "javascript": "Javascript",
-                "js": "Javascript",
-                "kotlin": "Kotlin",
-                "ocaml": "OCaml",
-                "octave": "Octave",
-                "pascal": "Pascal",
-                "perl": "Perl",
-                "php": "PHP",
-                "txt": "Plain Text",
-                "prolog": "Prolog",
-                "r": "R",
-                "ruby": "Ruby",
-                "rust": "Rust",
-                "scala": "Scala",
-                "swift": "Swift",
-                "sql": "SQL",
-                "mysql": "SQL",
-                "typescript": "Typescript",
-                "assembly": "Assembly",
-                "lisp": "Lisp",
-                }
+convert_lang = {
+    "cpp": "C++",
+    "c": "C",
+    "c++": "C++",
+    "py": "Python",
+    "python": "Python",
+    "vbnet": "Visual Basic.Net",
+    "bash": "Bash",
+    "basic": "Basic",
+    "clojure": "Clojure",
+    "csharp": "C#",
+    "crystal": "Crystal",
+    "d": "D",
+    "elixir": "Elixir",
+    "erlang": "Erlang",
+    "fsharp": "F#",
+    "fortran": "Fortran",
+    "go": "GO",
+    "groovy": "Groovy",
+    "haskell": "Haskell",
+    "insect": "Insect",
+    "java": "Java",
+    "javascript": "Javascript",
+    "js": "Javascript",
+    "kotlin": "Kotlin",
+    "ocaml": "OCaml",
+    "octave": "Octave",
+    "pascal": "Pascal",
+    "perl": "Perl",
+    "php": "PHP",
+    "txt": "Plain Text",
+    "prolog": "Prolog",
+    "r": "R",
+    "ruby": "Ruby",
+    "rust": "Rust",
+    "scala": "Scala",
+    "swift": "Swift",
+    "sql": "SQL",
+    "mysql": "SQL",
+    "typescript": "Typescript",
+    "assembly": "Assembly",
+    "lisp": "Lisp",
+}
 languages = dict()
 with open('Api\\languages.json') as json_file:
     languages = json.load(json_file)
+
+# (pd.DataFrame.from_dict(data=convert_lang, orient='index')
+#    .to_csv('dict_file.csv', header=False))
 
 
 @bot.event
@@ -108,12 +119,122 @@ async def embedi(ctx):
     await ctx.send(embed=embed)
 
 
-@ bot.command(name="hello")
+@bot.command(name="languages", aliases=["lang", "langs"],
+             brief="List of languages supported by the bot",
+             description="List of languages and the compilers used by the bot")
+async def langs(ctx):
+    desc = """ 
++----------------------------+-------------------------------+
+| lang(code Blocks language) | Language used for compilation |
++----------------------------+-------------------------------+
+| cpp                        | C++                           |
++----------------------------+-------------------------------+
+| c                          | C                             |
++----------------------------+-------------------------------+
+| c++                        | C++                           |
++----------------------------+-------------------------------+
+| py                         | Python                        |
++----------------------------+-------------------------------+
+| python                     | Python                        |
++----------------------------+-------------------------------+
+| vbnet                      | Visual Basic.Net              |
++----------------------------+-------------------------------+
+| bash                       | Bash                          |
++----------------------------+-------------------------------+
+| basic                      | Basic                         |
++----------------------------+-------------------------------+
+| clojure                    | Clojure                       |
++----------------------------+-------------------------------+
+| csharp                     | C#                            |
++----------------------------+-------------------------------+
+| crystal                    | Crystal                       |
++----------------------------+-------------------------------+
+| d                          | D                             |
++----------------------------+-------------------------------+
+| elixir                     | Elixir                        |
++----------------------------+-------------------------------+
+| erlang                     | Erlang                        |
++----------------------------+-------------------------------+
+| fsharp                     | F#                            |
++----------------------------+-------------------------------+
+| fortran                    | Fortran                       |
++----------------------------+-------------------------------+
+| go                         | GO                            |
++----------------------------+-------------------------------+
+| groovy                     | Groovy                        |
++----------------------------+-------------------------------+
+| haskell                    | Haskell                       |
++----------------------------+-------------------------------+
+| insect                     | Insect                        |
++----------------------------+-------------------------------+
+| java                       | Java                          |
++----------------------------+-------------------------------+
+| javascript                 | Javascript                    |
++----------------------------+-------------------------------+
+| js                         | Javascript                    |
++----------------------------+-------------------------------+
+| kotlin                     | Kotlin                        |
++----------------------------+-------------------------------+
+| ocaml                      | OCaml                         |
++----------------------------+-------------------------------+
+| octave                     | Octave                        |
++----------------------------+-------------------------------+
+| pascal                     | Pascal                        |
++----------------------------+-------------------------------+
+| perl                       | Perl                          |
++----------------------------+-------------------------------+
+| php                        | PHP                           |
++----------------------------+-------------------------------+
+| txt                        | Plain Text                    |
++----------------------------+-------------------------------+
+| prolog                     | Prolog                        |
++----------------------------+-------------------------------+
+| r                          | R                             |
++----------------------------+-------------------------------+
+| ruby                       | Ruby                          |
++----------------------------+-------------------------------+
+| rust                       | Rust                          |
++----------------------------+-------------------------------+
+| scala                      | Scala                         |
++----------------------------+-------------------------------+
+| swift                      | Swift                         |
++----------------------------+-------------------------------+
+| sql                        | SQL                           |
++----------------------------+-------------------------------+
+| mysql                      | SQL                           |
++----------------------------+-------------------------------+
+| typescript                 | Typescript                    |
++----------------------------+-------------------------------+
+| assembly                   | Assembly                      |
++----------------------------+-------------------------------+
+| lisp                       | Lisp                          |
++----------------------------+-------------------------------+
+"""
+    for i in range(len(desc)//1954+1):
+        s = desc[1954*i:(1954*(i+1))]
+        await ctx.send("```\n"+s+"\n```")
+
+
+@ bot.command(name="hello", aliases=["hi"])
 async def hello(ctx):
-    await ctx.send("Hi " + ctx.message.author.display_name)
+    if(ctx.message.author.id == 360714746363904000):
+        await ctx.send("Hello Master " + ctx.message.author.mention)
+        await ctx.send(Emotes.yay)
+    else:
+        await ctx.send("Hi"+ctx.message.author.mention)
 
 
-@bot.command(name="compile")
+@bot.command(name="compile",
+             brief="Compiles code",
+             description="""Compiles code given in code blocks "\\`\\`\\`lang\\`\\`\\`"
+                            It takes the language given in the code block as a prameter
+                            and the code given in the code block as source code.
+                            It will ask for compiler options based on the language chosen and user input.
+                        
+                            Results include compiler output, stdin,stdout,stderr,time taken and memory used.
+                            
+                            check out ;languages for list of languages supported
+                            """)
 async def Compile(ctx):
 
     print(ctx.message.content)
@@ -122,7 +243,12 @@ async def Compile(ctx):
     print(s)
     lang = (s.partition('\n')[0]).strip()
     print(lang)
+    try:
+        convert_lang[lang]
+    except KeyError:
+        return await ctx.send("Unkown language. Use `;languages` to get list of languages")
     await ctx.send("```language: %s```" % lang)
+
     code = s.join(s.split('\n', 1)[1:])
     code.strip()
 
@@ -131,12 +257,15 @@ async def Compile(ctx):
 
     def rxn_check(reaction, user):
         try:
-            return user == ctx.message.author and emote_to_num[str(reaction.emoji)] <= 10
+            return user == ctx.message.author and emote_to_num[str(reaction.emoji)] <= len(opt)
         except KeyError:
             return False
 
     opt = dict()
-    search(convert_lang[lang], opt)
+    try:
+        search(convert_lang[lang], opt)
+    except KeyError:
+        return await ctx.send("Unkown language. Use `;languages` to get list of languages")
     # print(opt)
     # description of the compiler embed
     desc = ""
@@ -178,18 +307,18 @@ async def Compile(ctx):
 
     else:
         await ctx.send("User input recieved 👍")
-        await compile_bot(ctx, code, msg.content[3:len(msg.content)-3], lang=int(compiler[0]))
-
-# print(languages)
+        await compile_bot(ctx, code, msg.content[3:len(msg.content)-3].replace('\n', "", 1), lang=int(compiler[0]))
 
 
 def search(lang, opt):
     k = 1
     for language in languages:
-        if ((language["name"].lower().startswith(lang.lower()+" ")) and
+        if ((language["name"].lower().startswith(lang.lower()+" ") or language["name"].lower() == lang.lower()) and
                 (language["is_archived"] == False)):
-
-            opt[k] = [language["id"], language["name"]]
+            try:
+                opt[k] = [language["id"], language["name"]]
+            except:
+                raise Exception("Unknown language")
             k += 1
     print(k)
     pp.pprint(opt)
