@@ -105,8 +105,6 @@ def compile_api(text: str, Input: str = None, language: int = 54):
     with open("Api_handling\\encode.json", "w") as outfile:
         outfile.write(response.text)
 
-    # print the dict
-    pp.pprint(received_response)
     # print("compile_output:\n ", received_response['compile_output'])
 
     # decode the stuff line by line which are encodes in b64
