@@ -90,8 +90,6 @@ convert_lang = {"cpp": "C++",
                 "typescript": "Typescript",
                 "assembly": "Assembly",
                 "lisp": "Lisp",
-
-
                 }
 languages = dict()
 with open('Api\\languages.json') as json_file:
@@ -117,7 +115,7 @@ async def hello(ctx):
 
 @bot.command(name="compile")
 async def Compile(ctx):
-    i = 3
+
     print(ctx.message.content)
     s = ctx.message.content[8:]
     s = s[4:len(s)-3]
@@ -140,6 +138,7 @@ async def Compile(ctx):
     opt = dict()
     search(convert_lang[lang], opt)
     # print(opt)
+    # description of the compiler embed
     desc = ""
     for i in opt.keys():
         desc += num_to_emote[i] + " "+opt[i][1]+"\n"

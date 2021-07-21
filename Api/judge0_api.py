@@ -122,7 +122,7 @@ def compile_api(text: str, Input: str = None, language: int = 54):
     # dump the decoded response
     with open("Api\\decode.json", "w") as outfile:
         outfile.write(json_object)
-        return received_response
+    return received_response
 
 
 async def compile_bot(ctx, code, Input=None, lang=54):
@@ -140,7 +140,7 @@ async def compile_bot(ctx, code, Input=None, lang=54):
         s += ("```Status id : %s" %
               output["status"]["id"] + '\n' + output["status"]["description"]+"\n```")
 
-        # if there is some comiple output
+        # if there is some compile output
         if(output["compile_output"] is not None):
             s += ("```compiler output:\n" +
                   output["compile_output"]+'\n'+'```')
