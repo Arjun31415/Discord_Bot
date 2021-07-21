@@ -142,7 +142,6 @@ async def Compile(ctx):
 
     else:
         await ctx.send("User input recieved 👍")
-        print(msg.content)
         await compile_bot(ctx, code, msg.content[3:len(msg.content)-3], lang=int(compiler[0]))
 
 # print(languages)
@@ -158,5 +157,4 @@ def search(lang, opt):
     pp.pprint(opt)
 
 
-print(os.getenv('x-rapidapi-key'))
 bot.run(os.getenv('TOKEN'))
