@@ -5,13 +5,10 @@ import pprint as pp  # pip install pprintpp
 from io import StringIO
 
 import discord  # pip install discord
-import markdown  # pip install markdown
-from bs4 import BeautifulSoup  # pip install beautifulsoup4
 from discord.ext import commands
 from dotenv import load_dotenv  # pip install python-dotenv
-from markdown import Markdown  # pip install markdown
 
-from Api_handling.judge0_api import compile_bot
+from Api.judge0_api import compile_bot
 
 prefix = ';'
 
