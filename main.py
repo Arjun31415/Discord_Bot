@@ -54,10 +54,47 @@ convert_lang = {"cpp": "C++",
                 "c": "C",
                 "py": "Python",
                 "python": "Python",
-                "vbnet": "Visual Basic.Net"
+                "vbnet": "Visual Basic.Net",
+                "bash": "Bash",
+                "basic": "Basic",
+                "clojure": "Clojure",
+                "csharp": "C#",
+                "crystal": "Crystal",
+                "d": "D",
+                "elixir": "Elixir",
+                "erlang": "Erlang",
+                "fsharp": "F#",
+                "fortran": "Fortran",
+                "go": "GO",
+                "groovy": "Groovy",
+                "haskell": "Haskell",
+                "insect": "Insect",
+                "java": "Java",
+                "javascript": "Javascript",
+                "js": "Javascript",
+                "kotlin": "Kotlin",
+                "ocaml": "OCaml",
+                "octave": "Octave",
+                "pascal": "Pascal",
+                "perl": "Perl",
+                "php": "PHP",
+                "txt": "Plain Text",
+                "prolog": "Prolog",
+                "r": "R",
+                "ruby": "Ruby",
+                "rust": "Rust",
+                "scala": "Scala",
+                "swift": "Swift",
+                "sql": "SQL",
+                "mysql": "SQL",
+                "typescript": "Typescript",
+                "assembly": "Assembly",
+                "lisp": "Lisp",
+
+
                 }
 languages = dict()
-with open('Api_handling\\languages.json') as json_file:
+with open('Api\\languages.json') as json_file:
     languages = json.load(json_file)
 
 
@@ -150,7 +187,9 @@ async def Compile(ctx):
 def search(lang, opt):
     k = 1
     for language in languages:
-        if language["name"].lower().startswith(lang.lower()+" "):
+        if ((language["name"].lower().startswith(lang.lower()+" ")) and
+                (language["is_archived"] == False)):
+
             opt[k] = [language["id"], language["name"]]
             k += 1
     print(k)

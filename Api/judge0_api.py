@@ -102,7 +102,7 @@ def compile_api(text: str, Input: str = None, language: int = 54):
     received_response = json.loads(response.text)
 
     # dump it into a file
-    with open("Api_handling\\encode.json", "w") as outfile:
+    with open("Api\\encode.json", "w") as outfile:
         outfile.write(response.text)
 
     # print("compile_output:\n ", received_response['compile_output'])
@@ -120,7 +120,7 @@ def compile_api(text: str, Input: str = None, language: int = 54):
     json_object = json.dumps(received_response, indent=4)
 
     # dump the decoded response
-    with open("Api_handling\\decode.json", "w") as outfile:
+    with open("Api\\decode.json", "w") as outfile:
         outfile.write(json_object)
         return received_response
 
