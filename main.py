@@ -103,13 +103,22 @@ languages = dict()
 with open('Api\\languages.json') as json_file:
     languages = json.load(json_file)
 
-# (pd.DataFrame.from_dict(data=convert_lang, orient='index')
-#    .to_csv('dict_file.csv', header=False))
+(pd.DataFrame.from_dict(data=convert_lang, orient='index')
+   .to_csv('dict_file.csv', header=False))
 
 
 @bot.event
 async def on_ready():  # When the bot starts
     print(f"Bot online and logged in as {bot.user}")
+
+
+@ bot.command(name="hello", aliases=["hi"])
+async def hello(ctx):
+    if(ctx.message.author.id == 360714746363904000):
+        await ctx.send("Hello Master " + ctx.message.author.mention)
+        await ctx.send(Emotes.yay)
+    else:
+        await ctx.send("Hi"+ctx.message.author.mention)
 
 
 @ bot.command(name="embed")
@@ -124,104 +133,140 @@ async def embedi(ctx):
              description="List of languages and the compilers used by the bot")
 async def langs(ctx):
     desc = """ 
-+----------------------------+-------------------------------+
-| lang(code Blocks language) | Language used for compilation |
-+----------------------------+-------------------------------+
-| cpp                        | C++                           |
-+----------------------------+-------------------------------+
-| c                          | C                             |
-+----------------------------+-------------------------------+
-| c++                        | C++                           |
-+----------------------------+-------------------------------+
-| py                         | Python                        |
-+----------------------------+-------------------------------+
-| python                     | Python                        |
-+----------------------------+-------------------------------+
-| vbnet                      | Visual Basic.Net              |
-+----------------------------+-------------------------------+
-| bash                       | Bash                          |
-+----------------------------+-------------------------------+
-| basic                      | Basic                         |
-+----------------------------+-------------------------------+
-| clojure                    | Clojure                       |
-+----------------------------+-------------------------------+
-| csharp                     | C#                            |
-+----------------------------+-------------------------------+
-| crystal                    | Crystal                       |
-+----------------------------+-------------------------------+
-| d                          | D                             |
-+----------------------------+-------------------------------+
-| elixir                     | Elixir                        |
-+----------------------------+-------------------------------+
-| erlang                     | Erlang                        |
-+----------------------------+-------------------------------+
-| fsharp                     | F#                            |
-+----------------------------+-------------------------------+
-| fortran                    | Fortran                       |
-+----------------------------+-------------------------------+
-| go                         | GO                            |
-+----------------------------+-------------------------------+
-| groovy                     | Groovy                        |
-+----------------------------+-------------------------------+
-| haskell                    | Haskell                       |
-+----------------------------+-------------------------------+
-| insect                     | Insect                        |
-+----------------------------+-------------------------------+
-| java                       | Java                          |
-+----------------------------+-------------------------------+
-| javascript                 | Javascript                    |
-+----------------------------+-------------------------------+
-| js                         | Javascript                    |
-+----------------------------+-------------------------------+
-| kotlin                     | Kotlin                        |
-+----------------------------+-------------------------------+
-| ocaml                      | OCaml                         |
-+----------------------------+-------------------------------+
-| octave                     | Octave                        |
-+----------------------------+-------------------------------+
-| pascal                     | Pascal                        |
-+----------------------------+-------------------------------+
-| perl                       | Perl                          |
-+----------------------------+-------------------------------+
-| php                        | PHP                           |
-+----------------------------+-------------------------------+
-| txt                        | Plain Text                    |
-+----------------------------+-------------------------------+
-| prolog                     | Prolog                        |
-+----------------------------+-------------------------------+
-| r                          | R                             |
-+----------------------------+-------------------------------+
-| ruby                       | Ruby                          |
-+----------------------------+-------------------------------+
-| rust                       | Rust                          |
-+----------------------------+-------------------------------+
-| scala                      | Scala                         |
-+----------------------------+-------------------------------+
-| swift                      | Swift                         |
-+----------------------------+-------------------------------+
-| sql                        | SQL                           |
-+----------------------------+-------------------------------+
-| mysql                      | SQL                           |
-+----------------------------+-------------------------------+
-| typescript                 | Typescript                    |
-+----------------------------+-------------------------------+
-| assembly                   | Assembly                      |
-+----------------------------+-------------------------------+
-| lisp                       | Lisp                          |
-+----------------------------+-------------------------------+
++------------------+------------------+
+| code Blocks lang | Compiler Lang    |
++------------------+------------------+
+| cpp              | C++              |
++------------------+------------------+
+| c                | C                |
++------------------+------------------+
+| c++              | C++              |
++------------------+------------------+
+| py               | Python           |
++------------------+------------------+
+| python           | Python           |
++------------------+------------------+
+| vbnet            | Visual Basic.Net |
++------------------+------------------+
+| bash             | Bash             |
++------------------+------------------+
+| basic            | Basic            |
++------------------+------------------+
+| clojure          | Clojure          |
++------------------+------------------+
+| csharp           | C#               |
++------------------+------------------+
+| crystal          | Crystal          |
++------------------+------------------+
+| d                | D                |
++------------------+------------------+
+| elixir           | Elixir           |
++------------------+------------------+
+| erlang           | Erlang           |
++------------------+------------------+
+| fsharp           | F#               |
++------------------+------------------+
+| fortran          | Fortran          |
++------------------+------------------+
+| go               | GO               |
++------------------+------------------+
+| groovy           | Groovy           |
++------------------+------------------+
+| haskell          | Haskell          |
++------------------+------------------+
+| insect           | Insect           |
++------------------+------------------+
+| java             | Java             |
++------------------+------------------+
+| javascript       | Javascript       |
++------------------+------------------+
+| js               | Javascript       |
++------------------+------------------+
+| kotlin           | Kotlin           |
++------------------+------------------+
+| ocaml            | OCaml            |
++------------------+------------------+
+| octave           | Octave           |
++------------------+------------------+
+| pascal           | Pascal           |
++------------------+------------------+
+| perl             | Perl             |
++------------------+------------------+
+| php              | PHP              |
++------------------+------------------+
+| txt              | Plain Text       |
++------------------+------------------+
+| prolog           | Prolog           |
++------------------+------------------+
+| r                | R                |
++------------------+------------------+
+| ruby             | Ruby             |
++------------------+------------------+
+| rust             | Rust             |
++------------------+------------------+
+| scala            | Scala            |
++------------------+------------------+
+| swift            | Swift            |
++------------------+------------------+
+| sql              | SQL              |
++------------------+------------------+
+| mysql            | SQL              |
++------------------+------------------+
+| typescript       | Typescript       |
++------------------+------------------+
+| assembly         | Assembly         |
++------------------+------------------+
+| lisp             | Lisp             |
++------------------+------------------+
 """
-    for i in range(len(desc)//1954+1):
-        s = desc[1954*i:(1954*(i+1))]
-        await ctx.send("```\n"+s+"\n```")
 
+    pages = []
+    for i in range(len(desc)//761+1):
+        s = desc[761*i:(761*(i+1))]
+        pages.append(discord.Embed(title="List of Languages",
+                     description="```\n"+s+"\n```",
+                     colour=discord.Colour.orange()))
+    # skip to start, left, right, skip to end
+    buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"]
+    current = 0
+    msg = await ctx.send(embed=pages[current])
 
-@ bot.command(name="hello", aliases=["hi"])
-async def hello(ctx):
-    if(ctx.message.author.id == 360714746363904000):
-        await ctx.send("Hello Master " + ctx.message.author.mention)
-        await ctx.send(Emotes.yay)
-    else:
-        await ctx.send("Hi"+ctx.message.author.mention)
+    for button in buttons:
+        await msg.add_reaction(button)
+
+    while True:
+        try:
+            reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, timeout=10.0)
+
+        except asyncio.TimeoutError:
+            # return print("test")
+            embed = pages[current]
+            embed.set_footer(text="Timed Out")
+            await msg.clear_reactions()
+            return print("test")
+
+        else:
+            previous_page = current
+            if reaction.emoji == u"\u23EA":
+                current = 0
+
+            elif reaction.emoji == u"\u2B05":
+                if current > 0:
+                    current -= 1
+
+            elif reaction.emoji == u"\u27A1":
+                if current < len(pages)-1:
+                    current += 1
+
+            elif reaction.emoji == u"\u23E9":
+                current = len(pages)-1
+
+            for button in buttons:
+                await msg.remove_reaction(button, ctx.author)
+
+            if current != previous_page:
+                await msg.edit(embed=pages[current])
+        # await ctx.send("```\n"+s+"\n```")
 
 
 @bot.command(name="compile",
