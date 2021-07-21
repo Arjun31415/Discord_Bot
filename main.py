@@ -138,7 +138,7 @@ async def embedi(ctx):
     await ctx.send(embed=embed)
 
 
-class Code_Compilation(commands.Cog, name="Code Compilation"):
+class Code_Compilation(commands.Cog, name="Code Compilation", description="Commands which are involved in code compiltaion and execution"):
     @commands.command(name="languages", aliases=["lang", "langs"],
                       brief="List of languages supported by the bot",
                       description="List of languages and the compilers used by the bot")
@@ -232,9 +232,13 @@ class Code_Compilation(commands.Cog, name="Code Compilation"):
     """
 
         pages = []
-        n = len(desc)//761+1
+        # n = len(desc)//761+1
+        temp = desc.splitlines()
+        n = (len(temp)+29)//30
+        print(n)
         for i in range(n):
-            s = desc[761*i:(761*(i+1))]
+            # s = desc[761*i:(761*(i+1))]
+            s = "\n".join(temp[i*30:(1+i)*30])
             pages.append(discord.Embed(title="List of Languages",
                                        description="```\n"+s+"\n```",
                                        colour=discord.Colour.orange()))
@@ -249,7 +253,8 @@ class Code_Compilation(commands.Cog, name="Code Compilation"):
 
         while True:
             try:
-                reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, timeout=10.0)
+                reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons,
+                                                    timeout=300.0)
 
             except asyncio.TimeoutError:
                 # return print("test")
