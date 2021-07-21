@@ -258,10 +258,8 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
 
             except asyncio.TimeoutError:
                 # return print("test")
-                embed = pages[current]
-                embed.set_footer(text="Timed Out")
                 await msg.clear_reactions()
-                return print("test")
+                return print("timed out")
 
             else:
                 previous_page = current
