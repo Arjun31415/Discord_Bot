@@ -1,12 +1,11 @@
-import pandas as pd
 import asyncio
-import json
-from logging import raiseExceptions  # builtin module for json handling
+import json  # builtin module for json handling
 import os  # builtin module
 import pprint as pp  # pip install pprintpp
 from io import StringIO
 
 import discord  # pip install discord
+import pandas as pd
 from discord.ext import commands
 from dotenv import load_dotenv  # pip install python-dotenv
 
@@ -232,12 +231,10 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
     """
 
         pages = []
-        # n = len(desc)//761+1
         temp = desc.splitlines()
         n = (len(temp)+29)//30
         print(n)
         for i in range(n):
-            # s = desc[761*i:(761*(i+1))]
             s = "\n".join(temp[i*30:(1+i)*30])
             pages.append(discord.Embed(title="List of Languages",
                                        description="```\n"+s+"\n```",
@@ -257,12 +254,14 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
                                                     timeout=300.0)
 
             except asyncio.TimeoutError:
-                # return print("test")
+
                 await msg.clear_reactions()
                 return print("timed out")
 
             else:
+
                 previous_page = current
+
                 if reaction.emoji == u"\u23EA":
                     current = 0
 
@@ -282,7 +281,6 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
 
                 if current != previous_page:
                     await msg.edit(embed=pages[current])
-            # await ctx.send("```\n"+s+"\n```")
 
     @commands.command(name="compile",
                       brief="Compiles code",
@@ -326,7 +324,7 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
             search(convert_lang[lang], opt)
         except KeyError:
             return await ctx.send("Unkown language. Use `;languages` to get list of languages")
-        # print(opt)
+
         # description of the compiler embed
         desc = ""
         for i in opt.keys():
@@ -339,7 +337,9 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
         for i in (opt.keys()):
             print(num_to_emote[i])
             await embed_message.add_reaction(num_to_emote[i])
+
         compiler = ""
+
         try:
             reaction, user = await bot.wait_for('reaction_add', timeout=30.0, check=rxn_check)
         except asyncio.TimeoutError:
@@ -349,23 +349,21 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
             compiler = opt[emote_to_num[str(reaction.emoji)]]
             await ctx.send("Compiler chosen: %s" % compiler[1])
         print(compiler)
+
         embed = discord.Embed(
             title="User Input", description="give Input in code blocks\n send 👎 (not in code blocks) to cancel input\n Wait time of 60 sec ")
         embed_message = await ctx.send(embed=embed)
 
-        # temp = await ctx.send("User Input () (wait time of 60 sec) (send 👎 to cancel input): ")
-
         msg = ""
+
         try:
             msg = await bot.wait_for('message', timeout=60.0, check=message_check)
             if "👎" in msg.content:
                 await ctx.send("`No User Input`")
                 return await compile_bot(ctx, code, lang=int(compiler[0]))
-
         except asyncio.TimeoutError:
             await ctx.send("`No user input recieved (Timeout)`")
             await compile_bot(ctx, code, lang=int(compiler[0]))
-
         else:
             await ctx.send("User input recieved 👍")
             await compile_bot(ctx, code, msg.content[3:len(msg.content)-3].replace('\n', "", 1), lang=int(compiler[0]))
