@@ -1,13 +1,13 @@
-import datetime
 import asyncio
+import datetime
 import json  # builtin module for json handling
 import os  # builtin module
 import pprint as pp  # pip install pprintpp
-import sys
-from io import StringIO
 import subprocess
-from typing import Text
+import sys
 import time
+from io import StringIO
+from typing import Text
 
 import discord  # pip install discord
 import pandas as pd
