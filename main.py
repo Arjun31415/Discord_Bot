@@ -137,9 +137,10 @@ async def hello(ctx):
 @bot.command(name="fetch")
 async def fetch(ctx, msgid: int):
     if(msgid is None):
-        return await ctx.send(embed=discord.Embed(description="Message id is missing",
-                                                  timestamp=datetime.datetime.utcnow(),
-                                                  color=0xfc3503))
+        return await ctx.send(embed=discord.Embed(
+            description="Message id is missing",
+            timestamp=datetime.datetime.utcnow(),
+            color=0xfc3503))
     if(not isinstance(msgid, int)):
         return await ctx.send(embed=discord.Embed(
             description="Message id must be an integer",
@@ -187,17 +188,19 @@ async def fetch(ctx, msgid: int):
 
 @ bot.command(name="embed")
 async def embedi(ctx):
-    embed = discord.Embed(title="Sample Embed", url="https://realdrewdata.medium.com/",
-                          description="```This is an embed that will show how to build an embed and the different components```",
-                          color=0xFF5733)
+    embed = discord.Embed(
+        title="Sample Embed", url="https://realdrewdata.medium.com/",
+        description="```This is an embed that will show how to build an embed and the different components```",
+        color=0xFF5733)
     embed.set_footer(text="1/1")
     await ctx.send(embed=embed)
 
 
 class Code_Compilation(commands.Cog, name="Code Compilation", description="Commands which are involved in code compiltaion and execution"):
-    @ commands.command(name="languages", aliases=["lang", "langs"],
-                       brief="List of languages supported by the bot",
-                       description="List of languages and the compilers used by the bot")
+    @ commands.command(
+        name="languages", aliases=["lang", "langs"],
+        brief="List of languages supported by the bot",
+        description="List of languages and the compilers used by the bot")
     async def langs(self, ctx):
         desc = """ 
 +------------------+------------------+
@@ -293,9 +296,10 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
         print(n)
         for i in range(n):
             s = "\n".join(temp[i*30:(1+i)*30])
-            pages.append(discord.Embed(title="List of Languages",
-                                       description="```\n"+s+"\n```",
-                                       colour=discord.Colour.orange()))
+            pages.append(discord.Embed(
+                title="List of Languages",
+                description="```\n"+s+"\n```",
+                colour=discord.Colour.orange()))
             pages[i].set_footer(text=f"{1+i}/{n}")
         # skip to start, left, right, skip to end
         buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"]
@@ -340,16 +344,17 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
                     await msg.edit(embed=pages[current])
 
     @commands.cooldown(2, 30, commands.BucketType.user)
-    @commands.command(name="compile",
-                      brief="Compiles code",
-                      description="""Compiles code given in code blocks "\\`\\`\\`lang\\`\\`\\`"
-                                It takes the language given in the code block as a prameter
-                                and the code given in the code block as source code.
-                                It will ask for compiler options based on the language chosen and user input.
-                            
-                                Results include compiler output, stdin,stdout,stderr,time taken and memory used.
-                                
-                                check out ;languages for list of languages supported
+    @commands.command(
+        name="compile",
+        brief="Compiles code",
+        description="""Compiles code given in code blocks "\\`\\`\\`lang\\`\\`\\`"
+                        It takes the language given in the code block as a prameter
+                        and the code given in the code block as source code.
+                        It will ask for compiler options based on the language chosen and user input.
+                    
+                        Results include compiler output, stdin,stdout,stderr,time taken and memory used.
+                        
+                        check out ;languages for list of languages supported
                                 """)
     async def Compile(self, ctx):
 
@@ -429,12 +434,17 @@ class Code_Compilation(commands.Cog, name="Code Compilation", description="Comma
     @Compile.error
     async def command_name_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
-            em = discord.Embed(title=f"Slow it down bro!",
-                               description=f"Try again in {error.retry_after:.2f}s.", color=discord.Color.dark_red())
+            em = discord.Embed(
+                title=f"Slow it down bro!",
+                description=f"Try again in {error.retry_after:.2f}s.",
+                color=discord.Color.dark_red()
+            )
             await ctx.send(embed=em, delete_after=error.retry_after)
 
-    @commands.command(name="eval", aliases=["evaluate"], breif="Only Trusted people and bot devs can use this command",
-                      description="Uses compile() to run python code")
+    @commands.command(
+        name="eval", aliases=["evaluate"], breif="Only Trusted people and bot devs can use this command",
+        description="Uses compile() to run python code"
+    )
     async def evaluate(self, ctx):
         if(ctx.message.author.id != 360714746363904000):
             return
