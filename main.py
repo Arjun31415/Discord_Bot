@@ -123,6 +123,7 @@ with open('Api\\languages.json') as json_file:
 @bot.event
 async def on_ready():  # When the bot starts
     print(f"Bot online and logged in as {bot.user}")
+    await bot.change_presence(activity = discord.Game(";help"))
 
 
 @ bot.command(name="hello", aliases=["hi"])
