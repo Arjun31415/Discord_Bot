@@ -109,7 +109,7 @@ def compile_api(text: str, Input: str = None, language: int = 54):
 
     # decode the stuff line by line which are encodes in b64
     for key in received_response:
-        if(encoded[key] == True and received_response[key] is not None):
+        if(encoded[key] is True and received_response[key] is not None):
             temp = received_response[key]
             temp = temp.splitlines()
             received_response[key] = ""
