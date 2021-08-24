@@ -505,7 +505,7 @@ def search(lang, opt):
     k = 1
     for language in languages:
         if ((language["name"].lower().startswith(lang.lower()+" ") or language["name"].lower() == lang.lower()) and
-                (language["is_archived"] == False)):
+                (language["is_archived"] is False)):
             try:
                 opt[k] = [language["id"], language["name"]]
             except:
